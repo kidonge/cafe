@@ -13,7 +13,7 @@ import java.awt.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class OrderMenu {
+public class OrderMenu extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

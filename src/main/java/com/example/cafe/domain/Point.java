@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Point {
+public class Point extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
