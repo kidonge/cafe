@@ -12,14 +12,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Member {
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
-    private Integer point;
+    private Integer totalPrice;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false)
+    private Member member;
 
 }
-
-
