@@ -6,23 +6,31 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
-public class Order {
+public class OrderMenu {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // 해당 메뉴의 가격
     @Column(nullable = false)
-    private Integer totalPrice;
+    private Integer price;
+
+    @Column(nullable = false)
+    private Integer amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "member_id")
-    private Member member;
+    @JoinColumn(nullable = false, name = "menu_id")
+    private Menu menu;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, name = "order_id")
+    private Order order;
 }
