@@ -2,20 +2,15 @@ package com.example.cafe.service;
 
 import com.example.cafe.domain.Menu;
 import com.example.cafe.repository.MenuRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static java.awt.SystemColor.menu;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class) // Mockito 클래스 사용
@@ -67,7 +62,7 @@ class MenuServiceTest {
          * then
          */
 
-        Assertions.assertThat(allMenu.size()).isEqualTo(menuList.size());
+        assertThat(allMenu.size()).isEqualTo(menuList.size());
     }
 
 
