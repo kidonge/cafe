@@ -1,6 +1,8 @@
 package com.example.cafe.service;
 
 import com.example.cafe.domain.Menu;
+import com.example.cafe.dto.reponsedto.MenuResponseDto;
+import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.repository.MenuRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.Arrays;
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
@@ -50,19 +53,13 @@ class MenuServiceTest {
          * when
          */
 
-        List<Menu> allMenu = menuService.allMenu();
-
-        /*
-        for(int i = 0 ; i < allMenu.size() ; i++){
-            System.out.println(allMenu.get(i).getName());
-        }
-        */
+        ResponseDto<List<MenuResponseDto>> responseDto = menuService.allMenu();
 
         /**
          * then
          */
 
-        assertThat(allMenu.size()).isEqualTo(menuList.size());
+        assertThat(responseDto.getData().size()).isEqualTo(menuList.size());
     }
 
 
