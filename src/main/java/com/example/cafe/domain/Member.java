@@ -20,6 +20,10 @@ public class Member extends Timestamped {
     @Column(nullable = false)
     private Integer point;
 
+    public void update(int point){
+        this.point = point;
+    }
+
 }
 
 
