@@ -1,0 +1,40 @@
+package com.example.cafe.service;
+
+import com.example.cafe.domain.Member;
+import com.example.cafe.domain.Point;
+import com.example.cafe.domain.PointType;
+import com.example.cafe.dto.reponsedto.PointResponseDto;
+import com.example.cafe.dto.reponsedto.ResponseDto;
+import com.example.cafe.dto.requestdto.PointRequestDto;
+import com.example.cafe.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@RequiredArgsConstructor
+public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    // 포인트 충전하기 // -> 애초에 충전만을 위한 api인데 굳이 충전 필드가 들어갈 필요가 있을까?? 고민해보기
+    @Transactional
+    public ResponseDto<?> chargePoint(PointRequestDto requestDto){
+
+        Member member = memberRepository.findById(requestDto.getMemberId()).get();
+
+        if(requestDto.getType() == PointType.POINT_CHARGE){
+            member.update(member.getPoint() + requestDto.getPoint());
+        }
+
+        PointResponseDto responseDto = PointResponseDto.builder()
+                .memberId(requestDto.getMemberId())
+                .point(member.getPoint())
+                .build();
+
+        return ResponseDto.success(responseDto);
+    }
+}
+
+
+// 충전하기, 결제하기를 따로 빼서 -> memberservice에 포인트 충전하기에 충전하기 넣고 ,OrderService에 Ordermenu()에 결제하기 넣고

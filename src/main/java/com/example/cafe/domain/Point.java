@@ -22,6 +22,7 @@ public class Point extends Timestamped {
     private Integer point;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
     private PointType type;
 
     @ManyToOne(fetch = FetchType.LAZY)
