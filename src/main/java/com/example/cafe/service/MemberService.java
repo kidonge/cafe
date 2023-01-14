@@ -5,11 +5,13 @@ import com.example.cafe.domain.Point;
 import com.example.cafe.domain.PointType;
 import com.example.cafe.dto.reponsedto.PointResponseDto;
 import com.example.cafe.dto.reponsedto.ResponseDto;
+import com.example.cafe.dto.requestdto.MenuRequestDto;
 import com.example.cafe.dto.requestdto.PointRequestDto;
 import com.example.cafe.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
@@ -17,9 +19,20 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
+    public ResponseDto<String> createUser() {
+        Member member = Member.builder()
+                .point(0)
+                .build();
+
+        memberRepository.save(member);
+
+        return ResponseDto.success("회원가입 완료!");
+    }
+
     // 포인트 충전하기 // -> 애초에 충전만을 위한 api인데 굳이 충전 필드가 들어갈 필요가 있을까?? 고민해보기
     @Transactional
-    public ResponseDto<?> chargePoint(PointRequestDto requestDto){
+    public ResponseDto<PointResponseDto> chargePoint(PointRequestDto requestDto){
 
         Member member = memberRepository.findById(requestDto.getMemberId()).get();
 
@@ -34,6 +47,8 @@ public class MemberService {
 
         return ResponseDto.success(responseDto);
     }
+
+
 }
 
 

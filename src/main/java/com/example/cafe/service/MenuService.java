@@ -44,7 +44,7 @@ public class MenuService {
 
         menuRepository.save(menu);
 
-        return ResponseDto.success("Success");
+        return ResponseDto.success("메뉴 추가 완료");
     }
 
 }
