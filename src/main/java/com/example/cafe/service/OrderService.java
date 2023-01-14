@@ -2,7 +2,7 @@ package com.example.cafe.service;
 
 import com.example.cafe.domain.Member;
 import com.example.cafe.domain.Menu;
-import com.example.cafe.domain.Order;
+import com.example.cafe.domain.Orders;
 import com.example.cafe.domain.OrderMenu;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
 import com.example.cafe.dto.reponsedto.ResponseDto;
@@ -54,12 +54,12 @@ public class OrderService {
         // 사용자 point update
         member.update(member.getPoint() - totalPrice);
 
-        Order order = Order.builder()
+        Orders orders = Orders.builder()
                 .totalPrice(totalPrice)
                 .member(member)
                 .build();
 
-        orderRepository.save(order);
+        orderRepository.save(orders);
 
         for(OrderRequestDto request : list){
             Menu menu = menuRepository.findById(request.getMenuId()).get();
@@ -67,7 +67,7 @@ public class OrderService {
                     .price(menu.getPrice())
                     .amount(request.getAmount())
                     .menu(menu)
-                    .order(order)
+                    .orders(orders)
                     .build();
 
             orderMenuRepository.save(orderMenu);

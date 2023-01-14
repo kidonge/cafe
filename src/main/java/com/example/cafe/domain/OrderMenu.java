@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.awt.*;
 
 @Entity
 @NoArgsConstructor
@@ -32,5 +31,5 @@ public class OrderMenu extends Timestamped {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "order_id")
-    private Order order;
+    private Orders orders;
 }

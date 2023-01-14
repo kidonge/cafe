@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Order extends Timestamped {
+public class Orders extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
