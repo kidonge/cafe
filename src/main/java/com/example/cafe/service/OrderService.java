@@ -7,10 +7,7 @@ import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
 import com.example.cafe.exception.CustomError;
 import com.example.cafe.exception.CustomException;
-import com.example.cafe.repository.MemberRepository;
-import com.example.cafe.repository.MenuRepository;
-import com.example.cafe.repository.OrderMenuRepository;
-import com.example.cafe.repository.OrderRepository;
+import com.example.cafe.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +23,7 @@ public class OrderService {
     private final MenuRepository menuRepository;
     private final MemberRepository memberRepository;
     private final OrderMenuRepository orderMenuRepository;
+    private final PointHistoryRepository pointHistoryRepository;
 
 
     /*
@@ -53,11 +51,19 @@ public class OrderService {
         // 사용자 point update
         member.update(member.getPoint() - totalPrice);
 
-        Orders orders = Orders.builder()
+        // 포인트 사용 이력 저장
+        PointHistory pointHistory = PointHistory.builder()
+                .point(totalPrice)
+                .type(PointType.POINT_PAYMENT)
+                .member(member)
+                .build();
+        pointHistoryRepository.save(pointHistory);
+
+        // orders 저장
+       Orders orders = Orders.builder()
                 .totalPrice(totalPrice)
                 .member(member)
                 .build();
-
         orderRepository.save(orders);
 
         for(OrderRequestDto request : list){
