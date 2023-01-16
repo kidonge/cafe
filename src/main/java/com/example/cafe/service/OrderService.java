@@ -1,10 +1,8 @@
 package com.example.cafe.service;
 
-import com.example.cafe.domain.Member;
-import com.example.cafe.domain.Menu;
-import com.example.cafe.domain.Orders;
-import com.example.cafe.domain.OrderMenu;
+import com.example.cafe.domain.*;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
+import com.example.cafe.dto.reponsedto.PopularMenuResponseDto;
 import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
 import com.example.cafe.exception.CustomError;
@@ -17,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -79,5 +78,13 @@ public class OrderService {
                 .build();
 
         return ResponseDto.success(orderResponseDto);
+    }
+
+    @Transactional(readOnly = true)
+    public ResponseDto<?> getPopularMenus() {
+
+        List<PopularMenu> popularMenu = orderMenuRepository.findPopularMenu();
+
+        return ResponseDto.success(popularMenu);
     }
 }
