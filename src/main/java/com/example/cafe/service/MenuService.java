@@ -21,7 +21,7 @@ public class MenuService {
     private final MenuRepository menuRepository;
 
     @Transactional(readOnly = true)
-    public ResponseDto<List<MenuResponseDto>> allMenu(){
+    public List<MenuResponseDto> getAllMenu(){
         List<Menu> menuList = menuRepository.findAll();
         List<MenuResponseDto> menuResponseDtoList = new ArrayList<>();
         for(Menu menu : menuList){
@@ -32,7 +32,7 @@ public class MenuService {
             menuResponseDtoList.add(menuResponseDto);
         }
 
-        return ResponseDto.success(menuResponseDtoList);
+        return menuResponseDtoList;
     }
 
     @Transactional

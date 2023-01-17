@@ -1,5 +1,6 @@
 package com.example.cafe.controller;
 
+import com.example.cafe.domain.PopularMenu;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
 import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
@@ -18,11 +19,11 @@ public class OrderController {
 
     @PostMapping("/order")
     public ResponseDto<OrderResponseDto> order(@RequestBody List<OrderRequestDto> orderList){
-        return orderService.orderMenu(orderList);
+        return ResponseDto.success(orderService.orderMenu(orderList));
     }
 
     @GetMapping("/popular-menus")
-    public ResponseDto<?> getPopularMenus(){
-        return orderService.getPopularMenus();
+    public ResponseDto<List<PopularMenu>> getPopularMenus(){
+        return ResponseDto.success(orderService.getPopularMenus());
     }
 }

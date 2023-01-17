@@ -20,12 +20,12 @@ public class MemberController {
 
     @PostMapping("/members")
     public ResponseDto<String> createUser(){
-        return memberService.createUser();
+        return ResponseDto.success(memberService.createUser());
     }
 
     @PostMapping("/point/charge")
     public ResponseDto<PointResponseDto> chargePoint(@RequestBody PointRequestDto requestDto){
-        return memberService.chargePoint(requestDto);
+        return ResponseDto.success(memberService.chargePoint(requestDto));
     }
 
 

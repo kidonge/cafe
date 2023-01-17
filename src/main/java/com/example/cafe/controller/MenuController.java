@@ -17,8 +17,8 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping("/menus")
-    public ResponseDto<List<MenuResponseDto>> getMenu(){
-        return menuService.allMenu();
+    public ResponseDto<List<MenuResponseDto>> getAllMenu(){
+        return ResponseDto.success(menuService.getAllMenu());
     }
 
     @PostMapping("/menus")

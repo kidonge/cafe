@@ -53,7 +53,7 @@ class MenuServiceTest {
          * when
          */
 
-        ResponseDto<List<MenuResponseDto>> responseDto = menuService.allMenu();
+        ResponseDto<List<MenuResponseDto>> responseDto = ResponseDto.success(menuService.getAllMenu());
 
         /**
          * then

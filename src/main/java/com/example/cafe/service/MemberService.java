@@ -22,19 +22,19 @@ public class MemberService {
     private final PointHistoryRepository pointHistoryRepository;
 
     @Transactional
-    public ResponseDto<String> createUser() {
+    public String createUser() {
         Member member = Member.builder()
                 .point(0)
                 .build();
 
         memberRepository.save(member);
 
-        return ResponseDto.success("회원가입 완료!");
+        return "회원가입 완료!";
     }
 
     // 포인트 충전하기 // -> 애초에 충전만을 위한 api인데 굳이 충전 필드가 들어갈 필요가 있을까?? 고민해보기
     @Transactional
-    public ResponseDto<PointResponseDto> chargePoint(PointRequestDto requestDto){
+    public PointResponseDto chargePoint(PointRequestDto requestDto){
 
         Member member = memberRepository.findById(requestDto.getMemberId()).get();
 
@@ -49,12 +49,12 @@ public class MemberService {
             pointHistoryRepository.save(pointHistory);
         }
 
-        PointResponseDto responseDto = PointResponseDto.builder()
+        PointResponseDto pointResponseDto = PointResponseDto.builder()
                 .memberId(requestDto.getMemberId())
                 .point(member.getPoint())
                 .build();
 
-        return ResponseDto.success(responseDto);
+        return pointResponseDto;
     }
 
 

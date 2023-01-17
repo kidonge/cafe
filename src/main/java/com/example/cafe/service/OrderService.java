@@ -34,7 +34,7 @@ public class OrderService {
      */
     //돈 부족 예외처리 필요
     @Transactional
-    public ResponseDto<OrderResponseDto> orderMenu(List<OrderRequestDto> list){
+    public OrderResponseDto orderMenu(List<OrderRequestDto> list){
 
         int totalPrice = 0;
         for(OrderRequestDto requestDto : list){
@@ -83,14 +83,14 @@ public class OrderService {
                 .point(member.getPoint())
                 .build();
 
-        return ResponseDto.success(orderResponseDto);
+        return orderResponseDto;
     }
 
     @Transactional(readOnly = true)
-    public ResponseDto<?> getPopularMenus() {
+    public List<PopularMenu> getPopularMenus() {
 
         List<PopularMenu> popularMenu = orderMenuRepository.findPopularMenu();
 
-        return ResponseDto.success(popularMenu);
+        return popularMenu;
     }
 }
