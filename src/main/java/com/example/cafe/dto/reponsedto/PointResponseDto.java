@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PointResponseDto {
 
-    private Integer memberId;
-    private Integer point;
+    private Long memberId;
+    private Long point;
 }

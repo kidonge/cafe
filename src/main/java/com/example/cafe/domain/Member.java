@@ -12,15 +12,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Member extends Timestamped {
+public class Member{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
-    private Integer point;
+    private Long point;
 
-    public void update(int point){
+    public void update(Long point){
         this.point = point;
     }
 

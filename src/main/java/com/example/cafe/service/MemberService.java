@@ -24,7 +24,7 @@ public class MemberService {
     @Transactional
     public String createUser() {
         Member member = Member.builder()
-                .point(0)
+                .point(0L)
                 .build();
 
         memberRepository.save(member);
@@ -49,12 +49,10 @@ public class MemberService {
             pointHistoryRepository.save(pointHistory);
         }
 
-        PointResponseDto pointResponseDto = PointResponseDto.builder()
+        return PointResponseDto.builder()
                 .memberId(requestDto.getMemberId())
                 .point(member.getPoint())
                 .build();
-
-        return pointResponseDto;
     }
 
 

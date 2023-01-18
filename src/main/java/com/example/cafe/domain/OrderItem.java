@@ -12,24 +12,23 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class OrderMenu extends Timestamped {
+public class OrderItem extends CreatedTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     // 해당 메뉴의 가격
     @Column(nullable = false)
-    private Integer price;
+    private Long price;
 
     @Column(nullable = false)
-    private Integer amount;
+    private Long amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, name = "menu_id")
-    private Menu menu;
+    @Column(nullable = false)
+    private Long menuId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "order_id")
-    private Orders orders;
+    private Order order;
 }

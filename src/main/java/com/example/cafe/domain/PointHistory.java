@@ -6,20 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
-public class PointHistory extends Timestamped {
+public class PointHistory extends CreatedTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
-    private Integer point;
+    private Long point;
 
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)

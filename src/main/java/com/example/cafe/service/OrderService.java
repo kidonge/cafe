@@ -2,8 +2,6 @@ package com.example.cafe.service;
 
 import com.example.cafe.domain.*;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
-import com.example.cafe.dto.reponsedto.PopularMenuResponseDto;
-import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
 import com.example.cafe.exception.CustomError;
 import com.example.cafe.exception.CustomException;
@@ -12,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -36,12 +33,11 @@ public class OrderService {
     @Transactional
     public OrderResponseDto orderMenu(List<OrderRequestDto> list){
 
-        int totalPrice = 0;
+        long totalPrice = 0;
         for(OrderRequestDto requestDto : list){
             Menu menu = menuRepository.findById(requestDto.getMenuId()).get();
             totalPrice += requestDto.getAmount() * menu.getPrice();
         }
-
         Member member = memberRepository.findById(list.get(0).getMemberId()).get();
 
         if(member.getPoint() < totalPrice){
@@ -60,30 +56,29 @@ public class OrderService {
         pointHistoryRepository.save(pointHistory);
 
         // orders 저장
-       Orders orders = Orders.builder()
-                .totalPrice(totalPrice)
-                .member(member)
-                .build();
-        orderRepository.save(orders);
+       Order order = Order.builder()
+               .totalPrice(totalPrice)
+               .member(member)
+               .build();
+
+        orderRepository.save(order);
 
         for(OrderRequestDto request : list){
             Menu menu = menuRepository.findById(request.getMenuId()).get();
-            OrderMenu orderMenu = OrderMenu.builder()
+            OrderItem orderItem = OrderItem.builder()
                     .price(menu.getPrice())
                     .amount(request.getAmount())
-                    .menu(menu)
-                    .orders(orders)
+                    .menuId(list.get(0).getMenuId())
+                    .order(order)
                     .build();
 
-            orderMenuRepository.save(orderMenu);
+            orderMenuRepository.save(orderItem);
         }
 
-        OrderResponseDto orderResponseDto = OrderResponseDto.builder()
+        return OrderResponseDto.builder()
                 .memberId(member.getId())
                 .point(member.getPoint())
                 .build();
-
-        return orderResponseDto;
     }
 
     @Transactional(readOnly = true)

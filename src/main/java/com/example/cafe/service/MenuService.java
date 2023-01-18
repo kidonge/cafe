@@ -36,7 +36,7 @@ public class MenuService {
     }
 
     @Transactional
-    public ResponseDto<String> addMenu(MenuRequestDto requestDto){
+    public String addMenu(MenuRequestDto requestDto){
         Menu menu = Menu.builder()
                 .name(requestDto.getName())
                 .price(requestDto.getPrice())
@@ -44,7 +44,7 @@ public class MenuService {
 
         menuRepository.save(menu);
 
-        return ResponseDto.success("메뉴 추가 완료");
+        return "메뉴 추가 완료";
     }
 
 }

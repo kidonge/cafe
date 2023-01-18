@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class OrderRequestDto {
 
-    private Integer memberId;
-    private Integer menuId;
-    private Integer amount;
+    private Long memberId;
+    private Long menuId;
+    private Long amount;
 
 }

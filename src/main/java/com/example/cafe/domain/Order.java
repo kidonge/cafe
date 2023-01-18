@@ -12,14 +12,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Orders extends Timestamped {
+@Table(name = "\"order\"")
+public class Order extends CreatedTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
-    private Integer totalPrice;
+    private Long totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "member_id")

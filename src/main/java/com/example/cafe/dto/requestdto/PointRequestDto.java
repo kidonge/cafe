@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 public class PointRequestDto {
 
-    private Integer memberId;
+    private Long memberId;
     private PointType type;
-    private Integer point;
+    private Long point;
 }

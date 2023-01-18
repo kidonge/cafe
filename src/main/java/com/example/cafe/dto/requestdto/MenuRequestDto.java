@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class MenuRequestDto {
 
     private String name;
-    private Integer price;
+    private Long price;
 }

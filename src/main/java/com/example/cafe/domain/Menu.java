@@ -12,11 +12,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Menu {
+public class Menu extends Timestamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     // 메뉴 이름
     @Column(nullable = false)
@@ -24,5 +24,5 @@ public class Menu {
 
     // 메뉴 가격
     @Column(nullable = false)
-    private Integer price;
+    private Long price;
 }

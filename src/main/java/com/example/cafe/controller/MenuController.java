@@ -23,6 +23,6 @@ public class MenuController {
 
     @PostMapping("/menus")
     public ResponseDto<String> addMenu(@RequestBody MenuRequestDto requestDto){
-        return menuService.addMenu(requestDto);
+        return ResponseDto.success(menuService.addMenu(requestDto));
     }
 }
