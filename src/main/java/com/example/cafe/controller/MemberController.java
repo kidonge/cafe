@@ -20,7 +20,7 @@ public class MemberController {
 
     @PostMapping("/members")
     public ResponseDto<String> createUser(){
-        return ResponseDto.success(memberService.createUser());
+        return ResponseDto.success(memberService.createMember());
     }
 
     @PostMapping("/point/charge")

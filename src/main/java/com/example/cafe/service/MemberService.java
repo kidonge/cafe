@@ -22,7 +22,7 @@ public class MemberService {
     private final PointHistoryRepository pointHistoryRepository;
 
     @Transactional
-    public String createUser() {
+    public String createMember() {
         Member member = Member.builder()
                 .point(0L)
                 .build();
