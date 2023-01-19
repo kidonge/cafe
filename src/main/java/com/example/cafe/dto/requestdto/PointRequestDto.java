@@ -13,6 +13,5 @@ import lombok.NoArgsConstructor;
 public class PointRequestDto {
 
     private Long memberId;
-    private PointType type;
     private Long point;
 }

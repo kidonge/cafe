@@ -39,15 +39,14 @@ public class MemberService {
         Member member = memberRepository.findById(requestDto.getMemberId()).get();
 
         // 멤버가 가지고 있는 포인트 변경 및 포인트 충전 이력 저장
-        if(requestDto.getType() == PointType.POINT_CHARGE){
             member.update(member.getPoint() + requestDto.getPoint());
             PointHistory pointHistory = PointHistory.builder()
                     .point(requestDto.getPoint())
-                    .type(requestDto.getType())
+                    .type(PointType.POINT_CHARGE)
                     .member(member)
                     .build();
             pointHistoryRepository.save(pointHistory);
-        }
+
 
         return PointResponseDto.builder()
                 .memberId(requestDto.getMemberId())
