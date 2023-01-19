@@ -3,6 +3,7 @@ package com.example.cafe.service;
 import com.example.cafe.domain.Menu;
 import com.example.cafe.dto.reponsedto.MenuResponseDto;
 import com.example.cafe.dto.reponsedto.ResponseDto;
+import com.example.cafe.dto.requestdto.MenuRequestDto;
 import com.example.cafe.repository.MenuRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class) // Mockito 클래스 사용
 class MenuServiceTest {
@@ -38,12 +40,12 @@ class MenuServiceTest {
 
         Menu menu1 = Menu.builder()
                 .name("아메리카노")
-                .price(5000)
+                .price(5000L)
                 .build();
 
         Menu menu2 = Menu.builder()
                 .name("카페라떼")
-                .price(6000)
+                .price(6000L)
                 .build();
 
         List<Menu> menuList = Arrays.asList(menu1, menu2);

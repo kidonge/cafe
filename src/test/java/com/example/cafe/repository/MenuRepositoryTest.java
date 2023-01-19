@@ -29,7 +29,7 @@ class MenuRepositoryTest {
          */
 
         String name = "아메리카노";
-        Integer price = 5000;
+        Long price = 5000L;
 
         Menu menu = Menu.builder()
                 .name(name)
@@ -61,10 +61,10 @@ class MenuRepositoryTest {
          */
 
         String name = "아메리카노";
-        Integer price = 5000;
+        Long price = 5000L;
 
         Menu menu = Menu.builder()
-                .id(1)
+                .id(1L)
                 .name(name)
                 .price(price)
                 .build();
