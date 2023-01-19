@@ -64,5 +64,38 @@ class MenuServiceTest {
         assertThat(responseDto.getData().size()).isEqualTo(menuList.size());
     }
 
+    @Test
+    @DisplayName("메뉴 추가")
+    void addMenu(){
+
+        // given
+
+        String name = "아메리카노";
+        Long price = 5000L;
+
+        MenuRequestDto menuRequestDto = MenuRequestDto.builder()
+                .name(name)
+                .price(price)
+                .build();
+
+        Menu menu = Menu.builder()
+                .name(menuRequestDto.getName())
+                .price(menuRequestDto.getPrice())
+                .build();
+
+
+        when(menuRepository.save(any())).thenReturn(menu);
+
+        // when
+
+        String response = menuService.addMenu(menuRequestDto);
+
+        // then
+
+        assertThat(response).isEqualTo("메뉴 추가 완료");
+
+
+    }
+
 
 }
