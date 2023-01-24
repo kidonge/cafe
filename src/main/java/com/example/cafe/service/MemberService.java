@@ -1,25 +1,19 @@
 package com.example.cafe.service;
 
 import com.example.cafe.domain.Member;
-import com.example.cafe.domain.PointHistory;
-import com.example.cafe.domain.PointType;
 import com.example.cafe.dto.reponsedto.PointResponseDto;
-import com.example.cafe.dto.reponsedto.ResponseDto;
-import com.example.cafe.dto.requestdto.MenuRequestDto;
 import com.example.cafe.dto.requestdto.PointRequestDto;
 import com.example.cafe.repository.MemberRepository;
-import com.example.cafe.repository.PointHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final PointHistoryRepository pointHistoryRepository;
+    private final PointService pointService;
 
     @Transactional
     public String createMember() {
@@ -39,14 +33,9 @@ public class MemberService {
         Member member = memberRepository.findById(requestDto.getMemberId()).get();
 
         // 멤버가 가지고 있는 포인트 변경 및 포인트 충전 이력 저장
-            member.update(member.getPoint() + requestDto.getPoint());
-            PointHistory pointHistory = PointHistory.builder()
-                    .point(requestDto.getPoint())
-                    .type(PointType.POINT_CHARGE)
-                    .member(member)
-                    .build();
-            pointHistoryRepository.save(pointHistory);
+            member.updatePoint(member.getPoint() + requestDto.getPoint());
 
+            pointService.chargePointHistory(member.toDto(), requestDto);
 
         return PointResponseDto.builder()
                 .memberId(requestDto.getMemberId())

@@ -20,7 +20,7 @@ public class OrderService {
     private final MenuRepository menuRepository;
     private final MemberRepository memberRepository;
     private final OrderMenuRepository orderMenuRepository;
-    private final PointHistoryRepository pointHistoryRepository;
+    private final PointService pointService;
 
 
     /*
@@ -45,15 +45,10 @@ public class OrderService {
         }
 
         // 사용자 point update
-        member.update(member.getPoint() - totalPrice);
+        member.updatePoint(member.getPoint() - totalPrice);
 
         // 포인트 사용 이력 저장
-        PointHistory pointHistory = PointHistory.builder()
-                .point(totalPrice)
-                .type(PointType.POINT_PAYMENT)
-                .member(member)
-                .build();
-        pointHistoryRepository.save(pointHistory);
+        pointService.payPointHistory(member.toDto(), totalPrice);
 
         // orders 저장
        Order order = Order.builder()
