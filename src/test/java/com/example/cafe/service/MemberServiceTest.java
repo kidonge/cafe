@@ -30,6 +30,9 @@ class MemberServiceTest {
     @Mock
     private MemberRepository memberRepository;
 
+    @Mock
+    private PointHistoryRepository pointHistoryRepository;
+
     @DisplayName("멤버 생성 테스트")
     @Test
     void createMember(){
@@ -49,6 +52,45 @@ class MemberServiceTest {
         // then
 
         assertThat(response).isEqualTo("회원가입 완료!");
+    }
+
+    @DisplayName("포인트 충전 테스트 ")
+    @Test
+    void chargePoint(){
+
+        // given
+        Long memberId = 1L;
+        Long point = 10000L;
+
+        PointRequestDto pointRequestDto = PointRequestDto.builder()
+                .memberId(memberId)
+                .point(point)
+                .build();
+
+        Member member = Member.builder()
+                .id(memberId)
+                .point(0L)
+                .build();
+
+        PointHistory pointHistory = PointHistory.builder()
+                .point(point)
+                .type(PointType.POINT_CHARGE)
+                .member(member)
+                .build();
+
+        when(memberRepository.findById(memberId)).thenReturn(Optional.ofNullable(member));
+        when(pointHistoryRepository.save(any())).thenReturn(pointHistory);
+
+        // when
+
+        PointResponseDto response = memberService.chargePoint(pointRequestDto);
+
+        // then
+
+        assertThat(member.getPoint()).isEqualTo(point);
+        assertThat(response.getPoint()).isEqualTo(point);
+
+
     }
 
 }
