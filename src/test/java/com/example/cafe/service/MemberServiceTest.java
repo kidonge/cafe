@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
@@ -31,7 +31,8 @@ class MemberServiceTest {
     private MemberRepository memberRepository;
 
     @Mock
-    private PointHistoryRepository pointHistoryRepository;
+    private PointService pointService;
+
 
     @DisplayName("멤버 생성 테스트")
     @Test
@@ -72,14 +73,9 @@ class MemberServiceTest {
                 .point(0L)
                 .build();
 
-        PointHistory pointHistory = PointHistory.builder()
-                .point(point)
-                .type(PointType.POINT_CHARGE)
-                .member(member)
-                .build();
 
         when(memberRepository.findById(memberId)).thenReturn(Optional.ofNullable(member));
-        when(pointHistoryRepository.save(any())).thenReturn(pointHistory);
+
 
         // when
 
@@ -87,9 +83,9 @@ class MemberServiceTest {
 
         // then
 
+        verify(pointService, times(1)).chargePointHistory(any(), any());
         assertThat(member.getPoint()).isEqualTo(point);
         assertThat(response.getPoint()).isEqualTo(point);
-
 
     }
 
