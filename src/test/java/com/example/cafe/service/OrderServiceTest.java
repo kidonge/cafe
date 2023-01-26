@@ -3,7 +3,10 @@ package com.example.cafe.service;
 import com.example.cafe.domain.Member;
 import com.example.cafe.domain.Menu;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
+import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
+import com.example.cafe.exception.CustomError;
+import com.example.cafe.exception.CustomException;
 import com.example.cafe.repository.MemberRepository;
 import com.example.cafe.repository.MenuRepository;
 import com.example.cafe.repository.OrderMenuRepository;
@@ -97,4 +100,54 @@ class OrderServiceTest {
 
 
     }
+
+    @DisplayName("돈 부족으로 주문 실패 테스트")
+    @Test
+    void orderFailTest(){
+
+        // given
+        Menu menu1 = Menu.builder()
+                .id(1L)
+                .name("아메리카노")
+                .price(4000L)
+                .build();
+
+        Menu menu2 = Menu.builder()
+                .id(2L)
+                .name("카페라떼")
+                .price(4500L)
+                .build();
+
+        when(menuRepository.findById(1L)).thenReturn(Optional.ofNullable(menu1));
+        when(menuRepository.findById(2L)).thenReturn(Optional.ofNullable(menu2));
+
+        Member member = Member.builder()
+                .id(1L)
+                .point(20000L)
+                .build();
+
+        when(memberRepository.findById(1L)).thenReturn(Optional.ofNullable(member));
+
+        OrderRequestDto orderRequestDto1 = OrderRequestDto.builder()
+                .memberId(1L)
+                .menuId(1L)
+                .amount(3L)
+                .build();
+
+        OrderRequestDto orderRequestDto2 = OrderRequestDto.builder()
+                .memberId(1L)
+                .menuId(2L)
+                .amount(3L)
+                .build();
+
+        List<OrderRequestDto> list = Arrays.asList(orderRequestDto1, orderRequestDto2);
+
+        // when
+
+        assertThatThrownBy(() -> orderService.orderMenu(list))
+                .isInstanceOf(RuntimeException.class);
+
+
+    }
+
 }
