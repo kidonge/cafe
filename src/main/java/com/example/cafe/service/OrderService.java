@@ -2,11 +2,14 @@ package com.example.cafe.service;
 
 import com.example.cafe.domain.*;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
+import com.example.cafe.dto.reponsedto.PopularMenuDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
 import com.example.cafe.exception.CustomError;
 import com.example.cafe.exception.CustomException;
 import com.example.cafe.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,11 +79,11 @@ public class OrderService {
                 .build();
     }
 
+    @Cacheable(value = "menu")
     @Transactional(readOnly = true)
-    public List<PopularMenu> getPopularMenus() {
+    public List<PopularMenuDto> getPopularMenus() {
 
-        List<PopularMenu> popularMenu = orderMenuRepository.findPopularMenu();
-
-        return popularMenu;
+        //return orderMenuRepository.findPopularMenu();
+        return menuRepository.popularMenus();
     }
 }

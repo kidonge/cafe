@@ -2,6 +2,7 @@ package com.example.cafe.controller;
 
 import com.example.cafe.domain.PopularMenu;
 import com.example.cafe.dto.reponsedto.OrderResponseDto;
+import com.example.cafe.dto.reponsedto.PopularMenuDto;
 import com.example.cafe.dto.reponsedto.ResponseDto;
 import com.example.cafe.dto.requestdto.OrderRequestDto;
 import com.example.cafe.service.OrderService;
@@ -23,7 +24,7 @@ public class OrderController {
     }
 
     @GetMapping("/popular-menus")
-    public ResponseDto<List<PopularMenu>> getPopularMenus(){
+    public ResponseDto<List<PopularMenuDto>> getPopularMenus(){
         return ResponseDto.success(orderService.getPopularMenus());
     }
 }
