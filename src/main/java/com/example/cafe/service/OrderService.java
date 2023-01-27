@@ -10,9 +10,13 @@ import com.example.cafe.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -80,9 +84,10 @@ public class OrderService {
     }
 
     @Cacheable(value = "menu")
+    @Scheduled(cron = "0 0 0 * * *")
     @Transactional(readOnly = true)
     public List<PopularMenuDto> getPopularMenus() {
-
+        System.out.println(LocalDateTime.now());
         //return orderMenuRepository.findPopularMenu();
         return menuRepository.popularMenus();
     }
